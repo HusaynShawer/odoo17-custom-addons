@@ -28,6 +28,7 @@
 
                     <header>
                         <field name = "state" widget="statusbar" options ="{'clickable':1}"/>
+                        <button name = "action" type = "object" class = "btn_primary" string = "Action"/>
                         <button name = "action_draft" type = "object" class = "btn_primary" string = "set to draft"
                         invisible = "state == 'draft'"/>
                         <button name = "action_confirmed" type = "object" class = "btn_primary" string = "set to confirmed"

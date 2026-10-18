@@ -81,6 +81,8 @@ class Property(models.Model):
                 record.is_late = True
                 print(record.expected_selling_date,fields.date.today())
 
+    def action(self):
+        print(self.env.user)
 
 
 class PropertyLine(models.Model):
