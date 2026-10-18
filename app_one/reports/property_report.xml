@@ -1,0 +1,83 @@
+<odoo>
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="model_property"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.property_report_template</field>
+    </record>
+
+    <template id="property_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+                <style>
+                    .property-report-title {
+                        text-align: center;
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #2c3e50;
+                        margin-bottom: 20px;
+                        border-bottom: 2px solid #3498db;
+                        padding-bottom: 8px;
+                    }
+                    .property-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 15px;
+                        font-size: 13px;
+                    }
+                    .property-table thead th {
+                        background-color: #3498db;
+                        color: #ffffff;
+                        text-align: left;
+                        padding: 8px 10px;
+                        border: 1px solid #2980b9;
+                        text-transform: uppercase;
+                    }
+                    .property-table tbody td {
+                        padding: 8px 10px;
+                        border: 1px solid #ddd;
+                    }
+                    .property-table tbody tr:nth-child(even) {
+                        background-color: #f5f8fa;
+                    }
+                    .property-table .section-header {
+                        background-color: #ecf0f1;
+                        font-weight: bold;
+                        color: #2c3e50;
+                        text-align: center;
+                    }
+                </style>
+
+                <t t-foreach="docs" t-as="o">
+                    <h1 class="property-report-title">
+                        Property Report
+                    </h1>
+                    <table class="property-table">
+                        <thead>
+                            <tr>
+                                <th colspan="4" class="section-header">General</th>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th><t t-esc ="o.name"/></th>
+                                <th>Postcode</th>
+                                <th ><t  t-esc ="o.postcode"/> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span t-field="o.name"/></td>
+                                <td></td>
+                                <td><span t-field="o.postcode"/></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

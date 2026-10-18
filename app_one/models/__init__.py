@@ -1,0 +1,1 @@
+from . import model_a,model_b,mdoel_c,model_d,property,owner,tag,sale_order,res_partner
