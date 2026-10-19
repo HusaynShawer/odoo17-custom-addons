@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action -->
+    <record id="action_workshop_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">workshop.customer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first customer</p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_workshop_customer_tree" model="ir.ui.view">
+        <field name="name">workshop.customer.tree</field>
+        <field name="model">workshop.customer</field>
+        <field name="arch" type="xml">
+            <tree string="Customers">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="device_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_workshop_customer_form" model="ir.ui.view">
+        <field name="name">workshop.customer.form</field>
+        <field name="model">workshop.customer</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Customer Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                        <group>
+                            <field name="street"/>
+                            <field name="city"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Devices" name="devices">
+                            <field name="device_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="serial_number"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Tickets" name="tickets">
+                            <field name="ticket_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="device_id"/>
+                                    <field name="technician_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,20 @@
+{
+    'name': 'Workshop Management',
+    'version': '17.0.0.1.0',
+    'author': 'husayn_shawer',
+    'category': 'Services',
+    'summary': 'Workshop management for devices repair',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'account', 'stock', 'product'],
+    'data': [
+        'security/workshop_security.xml',
+        'security/ir.model.access.csv',
+        'data/workshop_data.xml',
+        'views/customer_views.xml',
+        'views/device_views.xml',
+        'views/ticket_views.xml',
+        'views/res_users_views.xml',
+        'views/workshop_menus.xml',
+    ],
+    'application': True,
+}

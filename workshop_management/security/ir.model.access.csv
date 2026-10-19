@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_workshop_customer_tech,workshop.customer.tech,model_workshop_customer,group_workshop_technician,1,1,1,0
+access_workshop_customer_manager,workshop.customer.manager,model_workshop_customer,group_workshop_manager,1,1,1,1
+access_workshop_device_tech,workshop.device.tech,model_workshop_device,group_workshop_technician,1,1,1,0
+access_workshop_device_manager,workshop.device.manager,model_workshop_device,group_workshop_manager,1,1,1,1
+access_workshop_ticket_tech,workshop.ticket.tech,model_workshop_ticket,group_workshop_technician,1,1,1,0
+access_workshop_ticket_manager,workshop.ticket.manager,model_workshop_ticket,group_workshop_manager,1,1,1,1
+access_workshop_ticket_line_tech,workshop.ticket.line.tech,model_workshop_ticket_line,group_workshop_technician,1,1,1,1
+access_workshop_ticket_line_manager,workshop.ticket.line.manager,model_workshop_ticket_line,group_workshop_manager,1,1,1,1

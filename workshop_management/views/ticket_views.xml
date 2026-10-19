@@ -1,54 +1,156 @@
 <odoo>
 
-    <record id="action_workshop_device" model="ir.actions.act_window">
-        <field name="name">Devices</field>
-        <field name="res_model">workshop.device</field>
-        <field name="view_mode">tree,form</field>
+    <record id="action_workshop_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">workshop.ticket</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first ticket</p>
+        </field>
     </record>
 
-    <record id="view_workshop_device_tree" model="ir.ui.view">
-        <field name="name">workshop.device.tree</field>
-        <field name="model">workshop.device</field>
+    <!-- ============ TREE ============ -->
+    <record id="view_workshop_ticket_tree" model="ir.ui.view">
+        <field name="name">workshop.ticket.tree</field>
+        <field name="model">workshop.ticket</field>
         <field name="arch" type="xml">
-            <tree string="Devices">
+            <tree string="Tickets" decoration-info="state in ('new','inspection')"
+                  decoration-warning="state == 'waiting_part'"
+                  decoration-success="state == 'delivered'">
                 <field name="name"/>
-                <field name="serial_number"/>
                 <field name="customer_id"/>
+                <field name="device_id"/>
+                <field name="technician_id"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('new','inspection')"
+                       decoration-warning="state == 'waiting_part'"
+                       decoration-success="state == 'delivered'"/>
             </tree>
         </field>
     </record>
 
-    <record id="view_workshop_device_form" model="ir.ui.view">
-        <field name="name">workshop.device.form</field>
-        <field name="model">workshop.device</field>
+    <!-- ============ FORM ============ -->
+    <record id="view_workshop_ticket_form" model="ir.ui.view">
+        <field name="name">workshop.ticket.form</field>
+        <field name="model">workshop.ticket</field>
         <field name="arch" type="xml">
-            <form string="Device">
+            <form string="Ticket">
+                <header>
+                    <button name="action_start_inspection" type="object"
+                            string="Start Inspection" class="btn-primary"
+                            invisible="state != 'new'"/>
+                    <button name="action_waiting_part" type="object"
+                            string="Waiting for Part" class="btn-warning"
+                            invisible="state != 'inspection'"/>
+                    <button name="action_repaired" type="object"
+                            string="Mark Repaired" class="btn-success"
+                            invisible="state != 'waiting_part'"/>
+                    <button name="action_delivered" type="object"
+                            string="Deliver" class="btn-primary"
+                            invisible="state != 'repaired'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            invisible="state in ('delivered','cancelled')"
+                            confirm="Are you sure you want to cancel this ticket?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,inspection,waiting_part,repaired,delivered"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="Device Name"/></h1>
+                        <h1><field name="name" readonly="1"/></h1>
                     </div>
                     <group>
                         <group>
                             <field name="customer_id"/>
-                            <field name="serial_number"/>
+                            <field name="device_id"/>
+                            <field name="technician_id"/>
                         </group>
                         <group>
-                            <field name="description"/>
+                            <field name="invoice_id"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Tickets">
-                            <field name="ticket_ids">
-                                <tree>
-                                    <field name="name"/>
-                                    <field name="state" widget="badge"/>
-                                    <field name="technician_id"/>
+                        <page string="Description">
+                            <field name="description" placeholder="Describe the issue..."/>
+                        </page>
+                        <page string="Parts &amp; Services">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal" sum="Total"/>
                                 </tree>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
+        </field>
+    </record>
+
+    <!-- ============ KANBAN ============ -->
+    <record id="view_workshop_ticket_kanban" model="ir.ui.view">
+        <field name="name">workshop.ticket.kanban</field>
+        <field name="model">workshop.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="device_id"/>
+                <field name="technician_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_title">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div>
+                                <field name="customer_id"/>
+                            </div>
+                            <div>
+                                <field name="device_id"/>
+                            </div>
+                            <div class="text-muted">
+                                <field name="technician_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============ SEARCH ============ -->
+    <record id="view_workshop_ticket_search" model="ir.ui.view">
+        <field name="name">workshop.ticket.search</field>
+        <field name="model">workshop.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="device_id"/>
+                <field name="technician_id"/>
+                <filter name="filter_new" string="New" domain="[('state','=','new')]"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state','in',['inspection','waiting_part'])]"/>
+                <filter name="filter_repaired" string="Repaired"
+                        domain="[('state','=','repaired')]"/>
+                <separator/>
+                <filter name="filter_my_tickets" string="My Tickets"
+                        domain="[('technician_id','=',uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="Status"
+                            context="{'group_by':'state'}"/>
+                    <filter name="group_by_technician" string="Technician"
+                            context="{'group_by':'technician_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
 
