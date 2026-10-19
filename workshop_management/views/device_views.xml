@@ -1,0 +1,55 @@
+<odoo>
+
+    <record id="action_workshop_device" model="ir.actions.act_window">
+        <field name="name">Devices</field>
+        <field name="res_model">workshop.device</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_workshop_device_tree" model="ir.ui.view">
+        <field name="name">workshop.device.tree</field>
+        <field name="model">workshop.device</field>
+        <field name="arch" type="xml">
+            <tree string="Devices">
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="customer_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_workshop_device_form" model="ir.ui.view">
+        <field name="name">workshop.device.form</field>
+        <field name="model">workshop.device</field>
+        <field name="arch" type="xml">
+            <form string="Device">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Device Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="serial_number"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tickets">
+                            <field name="ticket_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="technician_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
