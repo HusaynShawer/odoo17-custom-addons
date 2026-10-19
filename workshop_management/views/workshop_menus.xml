@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+
     <menuitem id="menu_workshop_root"
               name="Workshop"
-              sequence="10"/>
+              sequence="10"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
     <menuitem id="menu_workshop_operations"
               name="Operations"
               parent="menu_workshop_root"
-              sequence="10"/>
+              sequence="10"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
     <menuitem id="menu_workshop_ticket"
               name="Tickets"
               parent="menu_workshop_operations"
               action="action_workshop_ticket"
-              sequence="10"/>
+              sequence="10"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
     <menuitem id="menu_workshop_master"
               name="Master Data"
               parent="menu_workshop_root"
-              sequence="20"/>
+              sequence="20"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
     <menuitem id="menu_workshop_customer"
               name="Customers"
               parent="menu_workshop_master"
               action="action_workshop_customer"
-              sequence="10"/>
+              sequence="10"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
     <menuitem id="menu_workshop_device"
               name="Devices"
               parent="menu_workshop_master"
               action="action_workshop_device"
-              sequence="20"/>
+              sequence="20"
+              groups="workshop_management.group_workshop_technician,workshop_management.group_workshop_manager"/>
 
 </odoo>
