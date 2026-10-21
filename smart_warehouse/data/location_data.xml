@@ -1,0 +1,7 @@
+<odoo>
+    <record id="location_showroom" model="stock.location">
+        <field name="name">Showroom</field>
+        <field name="usage">internal</field>
+        <field name="location_id" search = "[('name','=','WH'),('usage','=','view')]"/>
+    </record>
+</odoo>

@@ -1,0 +1,32 @@
+<odoo>
+    <record id = "category_accessories" model ="product.category">
+        <field name = "name">Computer Accessories</field>
+    </record>
+
+    <record id = "category_mice" model ="product.category">
+        <field name = "name">Mice</field>
+        <field name="parent_id" ref ="category_accessories"/>
+    </record>
+    <record id = "category_keyboards" model ="product.category">
+        <field name = "name">Keyboard</field>
+        <field name="parent_id" ref ="category_accessories"/>
+    </record>
+
+    <record id = "product_mouse" model ="product.template">
+        <field name = "name">Wireless Mouse</field>
+        <field name = "default_code">MOU-001</field>
+        <field name = "detailed_type">product</field>
+        <field name="categ_id" ref ="category_mice"/>
+        <field name = "list_price">350</field>
+        <field name = "standard_price">200</field>
+    </record>
+
+    <record id = "product_keyboard" model ="product.template">
+        <field name = "name">Wireless Keyboard</field>
+        <field name = "default_code">MOU-002</field>
+        <field name = "detailed_type">product</field>
+        <field name="categ_id" ref ="category_keyboards"/>
+        <field name = "list_price">900</field>
+        <field name = "standard_price">600</field>
+    </record>
+</odoo>
