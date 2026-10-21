@@ -1,0 +1,15 @@
+<odoo>
+    <record id="vendor_tech_supplies" model="res.partner">
+        <field name="name">Tech supplies Co.</field>
+        <field name="is_company" eval="True"/>
+        <field name="email">husayn@shawer.com</field>
+    </record>
+
+    <record id="supplier_ifo_keyboard" model="product.supplierinfo">
+        <field name="partner_id" ref ="vendor_tech_supplies"/>
+        <field name="product_tmpl_id" ref ="product_keyboard"/>
+        <field name="min_qty">1</field>
+        <field name="price">600</field>
+        <field name="delay">3</field>
+    </record>
+</odoo>
